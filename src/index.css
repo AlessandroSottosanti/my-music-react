@@ -280,6 +280,27 @@
     cursor: pointer;
 }
 
+
+.card-artist {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.card-artist:hover {
+    transform: scale(1.03);
+    box-shadow: 0 0 10px rgba(255,255,255,0.2);
+    cursor: pointer;
+}
+
+.card-album {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.card-album:hover {
+    transform: scale(1.03);
+    box-shadow: 0 0 10px rgba(255,255,255,0.2);
+    cursor: pointer;
+}
+
+
+
 .description {
   background-color: rgba(128, 128, 128, 0.3); 
   padding: 20px;

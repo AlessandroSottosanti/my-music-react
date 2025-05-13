@@ -72,7 +72,7 @@ function AlbumsPage() {
                     {Object.entries(groupAlbumsByArtist(albums)).map(([artistName, albums]) => (
                         <div key={artistName} className="mb-5">
                             <h4 className=" p-2 description">{artistName}</h4>
-                            <div className="row">
+                            <div className="row mt-4">
                                 {albums.map(album => (
                                     <div key={album.id} className="col-md-4 mb-4">
                                         <AlbumCard album={album} />
