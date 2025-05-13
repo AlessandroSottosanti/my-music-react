@@ -46,14 +46,17 @@ function AlbumDetailsPage() {
 
     return (
         <div className="container py-5 text-white">
-            <div className="row">
-                <div className="col-md-4">
+            <div className="row align-items-center">
+                <div className="col-md-4 ">
                     <img src={album.coverUrl} alt={album.title} className="img-fluid rounded shadow" />
                 </div>
-                <div className="col-md-8 mt-3">
+                <div className="col-md-8 mt-3 description">
                     <h2>{album.title}</h2>
                     <p><strong>Artista:</strong> {album.artistNames.join(", ")}</p>
-                    <p><strong>Genere:</strong> {album.genreNames.join(", ")}</p>
+                    <p><strong>Genere: </strong>
+                    {album.genreNames.map((g, idx) => (
+                        <span key={idx} className="badge bg-secondary me-1">{g}</span>
+                    ))}</p>
                     <p><strong>Anno:</strong> {new Date(album.releaseDate).getFullYear()}</p>
                     <p><strong>Descrizione:</strong> {album.description}</p>
                 </div>
@@ -61,7 +64,7 @@ function AlbumDetailsPage() {
 
             {/* Lista canzoni */}
             <div className="my-5">
-                <h4>Tracce</h4>
+                <h4 className="description text-center mb-3">Tracce</h4>
                 {songs.length === 0 ? (
                     <p>Nessuna canzone trovata per questo album.</p>
                 ) : (
@@ -69,7 +72,7 @@ function AlbumDetailsPage() {
                         {songs.map(song => (
                             <li
                                 key={song.id}
-                                className="list-group-item bg-dark text-white d-flex justify-content-between align-items-center hover bg-card rounded gap-2"
+                                className="list-group-item bg-dark text-white d-flex justify-content-between align-items-center hover bg-card rounded mb-2"
                                 onClick={() => window.open(song.songUrlYt, "_blank")}
                                 
                             >
@@ -88,3 +91,4 @@ function AlbumDetailsPage() {
 }
 
 export default AlbumDetailsPage;
+ 

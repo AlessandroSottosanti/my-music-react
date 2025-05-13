@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
+import AlbumCard from "../components/AlbumCard";
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -9,6 +10,7 @@ function ArtistDetailsPage() {
     const [artist, setArtist] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -30,8 +32,7 @@ function ArtistDetailsPage() {
     };
 
     const handleAlbumClick = (albumId) => {
-        // Gestisce il click sull'album e fa la navigazione (puoi anche gestire il routing in modo diverso)
-        window.location.href = `/albums/${albumId}`;  // Modifica questa logica se utilizzi React Router
+        navigate(`/albums/${albumId}`);
     };
 
     if (loading) return <div className="text-white text-center mt-5">Caricamento...</div>;
@@ -40,11 +41,11 @@ function ArtistDetailsPage() {
 
     return (
         <div className="container py-5 text-white">
-            <div className="row mb-4">
+            <div className="row mb-4 align-items-center">
                 <div className="col-md-4">
                     <img src={artist.imageUrl} alt={artist.name} className="img-fluid rounded shadow" />
                 </div>
-                <div className="col-md-8 mt-3">
+                <div className="col-md-8 mt-3 description">
                     <h2>{artist.name}</h2>
                     {artist.genreNames?.length > 0 && (
                         <p><strong>Generi:</strong> {artist.genreNames.join(", ")}</p>
@@ -56,21 +57,18 @@ function ArtistDetailsPage() {
             </div>
 
             <div className="mb-4">
-                <h4>Album</h4>
-                <ul className="list-group list-group-flush">
-                    {artist.albums?.map((album) => (
-                        <li
-                            key={album.id}
-                            className="list-group-item bg-dark text-white bg-card rounded hover mb-3"
-                            onClick={() => handleAlbumClick(album.id)}  // Gestisci il click sull'album
-                        >
-                            {album.title} - {album.releaseDate.split('-')[0]} {/* Mostra solo l'anno */}
-                        </li>
-                    ))}
-                    {(!artist.albums || artist.albums.length === 0) && (
-                        <li className="list-group-item bg-dark text-muted">Nessun album disponibile.</li>
-                    )}
-                </ul>
+                <h4 className="mb-3 description text-center">Album</h4>
+                {artist.albums && artist.albums.length > 0 ? (
+                    <div className="row">
+                        {artist.albums.map(album => (
+                            <div key={album.id} className="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
+                                <AlbumCard album={album} />
+                            </div>
+                        ))}
+                    </div>
+                ) : (
+                    <div className="text-muted">Nessun album disponibile.</div>
+                )}
             </div>
 
         </div>

@@ -4,7 +4,7 @@ function ArtistCard({ artist }) {
     return (
         <div className="col-md-4 mb-4">
             <Link to={`/artists/${artist.id}`} className="text-decoration-none text-white">
-                <div className="card bg-card text-white h-100 shadow">
+                <div className="card bg-card text-white h-100 shadow border-0">
                     <img
                         src={artist.imageUrl}
                         alt={artist.name}

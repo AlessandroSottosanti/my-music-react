@@ -1,30 +1,34 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import SongCard from "../components/SongCard";
+
 const apiUrl = import.meta.env.VITE_API_URL;
 
 function SongsPage() {
     const [songs, setSongs] = useState([]);
     const [filter, setFilter] = useState("");
+    const [loading, setLoading] = useState(true);
 
     const navigate = useNavigate();
 
     const getSongs = () => {
-        let query = `${apiUrl}/songs?`;
+        setLoading(true);  // Inizia il loading
 
-        if (filter) query += `query=${encodeURIComponent(filter)}`;
+        let query = `${apiUrl}/songs`;
+        if (filter) {
+            query += `?query=${encodeURIComponent(filter)}`;
+        }
 
-        console.log(query);
-        return axios
+        axios
             .get(query)
             .then(response => {
-                console.log("Dati ricevuti:", response.data);
                 setSongs(response.data);
+                setLoading(false);  // Fine loading
             })
             .catch(error => {
                 console.error("Errore nel recupero delle canzoni:", error);
-                throw error;
+                setLoading(false);  // Anche in caso di errore, fermare loading
             });
     };
 
@@ -36,20 +40,38 @@ function SongsPage() {
         navigate(`/songs/${songId}`);
     };
 
-    console.log("Canzoni:", songs);
-
     return (
-        <main className="mx-5 flex-grow-1 pt-5 text-white">
-            <span className="d-flex justify-content-center rounded bg-card mb-5 py-3"><h1>Lista canzoni:</h1></span>
-    
-            {songs.length === 0 ? (
-                <div className="container d-flex justify-content-center mt-5 p-3 rounded bg-danger text-white">
-                    <h3>Nessuna canzone trovata</h3>
+        <main className=" container flex-grow-1 pt-5 text-white">
+            <div className="d-flex justify-content-center bg-card rounded mb-4 py-3">
+                <h1>Lista canzoni:</h1>
+            </div>
+
+            <div className="mb-4">
+                <input
+                    type="text"
+                    className="form-control bg-dark text-white border-secondary text-center"
+                    placeholder="🔍"
+                    value={filter}
+                    onChange={(e) => setFilter(e.target.value)}
+                />
+            </div>
+
+            {loading ? (
+                <div className="d-flex flex-column align-items-center mt-5">
+                    <div className="spinner-border text-light" role="status" />
+                    <p className="mt-3">Caricamento canzoni...</p>
+                </div>
+            ) : songs.length === 0 ? (
+                <div className="text-center text-danger mt-5">
+                    <h4>Nessuna canzone trovata</h4>
                 </div>
             ) : (
-                <div className="row mx-5 ">
+                <div className="row">
                     {songs.map((song) => (
-                        <div key={song.id} className="col-12 col-sm-6 col-md-4 col-xl-3 col-xxxl-2 mb-4 my-3 d-flex justify-content-center ">
+                        <div
+                            key={song.id}
+                            className="col-12 col-sm-6 col-md-4 col-xl-3 col-xxxl-2 mb-4 my-3 d-flex justify-content-center"
+                        >
                             <SongCard song={song} handleCardClick={handleCardClick} />
                         </div>
                     ))}
@@ -57,7 +79,6 @@ function SongsPage() {
             )}
         </main>
     );
-    
 }
 
 export default SongsPage;

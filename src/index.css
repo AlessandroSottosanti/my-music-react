@@ -88,6 +88,11 @@
     bottom: 20px;
     right: 20px;
   }
+
+  .back-button{
+    top: 60px;
+    left:0px
+  }
   
   .bg-custom {
     background-color: #003D73;
@@ -213,9 +218,20 @@
     color: #777;
   }
   
-  .page-bg{
+  /* .page-bg{
     background-color: #252a30;
-  }
+  } */
+
+  .page-bg {
+    background-image: url("https://www.rollingstone.it/wp-content/uploads/2021/12/Lavazza_collage.jpg");
+    background-size: cover;
+    background-position: top;
+    background-repeat: no-repeat;
+    background-attachment: fixed; /* fa in modo che lo sfondo resti fermo mentre scrolli */
+    min-height: 100vh;
+    padding-top: 60px; /* spazio per la navbar */
+}
+
 
   .bg-card{
     background: linear-gradient(135deg, #ff416c, #ff4b2b);
@@ -254,3 +270,20 @@
 .song-image-container:hover .overlay {
   opacity: 1;
 }
+
+.card-song {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.card-song:hover {
+    transform: scale(1.03);
+    box-shadow: 0 0 10px rgba(255,255,255,0.2);
+    cursor: pointer;
+}
+
+.description {
+  background-color: rgba(128, 128, 128, 0.3); 
+  padding: 20px;
+  border-radius: 10px;
+  backdrop-filter: blur(2px); 
+}
+

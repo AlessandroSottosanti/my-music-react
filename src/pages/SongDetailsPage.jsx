@@ -59,7 +59,10 @@ function SongDetailsPage() {
                     <h2>{song.title}</h2>
                     <p><strong>Artista:</strong> {song.artistNames.join(", ")}</p>
                     <p><strong>Album:</strong> {song.albumTitle}</p>
-                    <p><strong>Genere:</strong> {song.genreNames.join(", ")}</p>
+                    <p><strong>Genere: </strong> 
+                    {song.genreNames.map((g, idx) => (
+                        <span key={idx} className="badge bg-secondary me-1">{g}</span>
+                    ))}</p>
                     <p><strong>Durata:</strong> {Math.floor(song.duration / 60)}:{(song.duration % 60).toString().padStart(2, '0')} min</p>
                     <p><strong>Anno:</strong> {new Date(song.albumReleaseDate).getFullYear()}</p>
                     <p><a target="_blank" href={song.songUrlYt} className="btn btn-danger"><i className="fa-brands fa-youtube"></i> Ascolta su YouTube</a></p>
